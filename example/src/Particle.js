@@ -3,8 +3,8 @@ export class Particle {
         this.x = params.x ? params.x : [0, 0];
         this.v = params.v ? params.v : [0, 0];
         this.a = params.a ? params.a : [0, 0];
-        this.mass = params.mass ? params.mass : 10;
-        this.radius = params.radius ? params.radius : 10;
+        this.mass = params.mass ? params.mass : 1;
+        this.radius = params.radius ? params.radius : 5;
         this.color = params.color ? params.color : '#ffffff'
     }
     update() {
@@ -40,12 +40,14 @@ export class ParticleSystem {
         // u = (r2 - r1)/|r2 - r1|
 
         const r = Math.sqrt((p2.x[0] - p1.x[0]) ** 2 + (p2.x[1] - p1.x[1]) ** 2);
-        if (r >= 5) {
+        if (r >= 10) {
             const G = 1;
             const u = [(p2.x[0] - p1.x[0]) / r, (p2.x[1] - p1.x[1]) / r];
             const fScalar = G * [(p1.mass * p2.mass) / (r ** 2)]
             const fVector = [fScalar * u[0], fScalar * u[1]];
 
+            // F = ma
+            // a = F/m
             p1.a[0] += fVector[0] / p1.mass;
             p1.a[1] += fVector[1] / p1.mass;
         }

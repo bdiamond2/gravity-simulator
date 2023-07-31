@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Particle, ParticleSystem } from './Particle.js';
+import React, { useRef, useEffect } from 'react';
+import { ParticleSystem } from './Particle.js';
 
 function Canvas(props) {
     const canvasRef = useRef(null);
@@ -27,17 +27,17 @@ function Canvas(props) {
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
-        const w = canvas.width;
-        const h = canvas.height;
         let pSys = new ParticleSystem();
         addSomeParticles(pSys);
 
         const params = {
             frameCount: 0,
+            speed: 0.5,
             particles: pSys.particles,
         }
 
-        function render() {
+        function render(ts) {
+            console.log(ts);
             params.frameCount++;
             pSys.update();
             draw(context, params);
@@ -51,21 +51,21 @@ function Canvas(props) {
 
 function addSomeParticles(particleSystem) {
     particleSystem.addParticle({
-        x: [400, 10],
+        x: [400, 100],
         v: [2, 0],
-        mass: 1,
+        mass: 200,
+        radius: 10,
         color: "#0000ff"
     });
     particleSystem.addParticle({
-        x: [400, 200],
-        v: [4, 0],
-        mass: 1,
-        color: "#ff8800"
+        x: [400, 150],
+        v: [5, 0],
+        color: "#e0cfa8"
     });
     particleSystem.addParticle({
         x: [400, 250],
         mass: 1000,
-        radius: 30,
+        radius: 20,
         color: '#ffff00'
     });
 }

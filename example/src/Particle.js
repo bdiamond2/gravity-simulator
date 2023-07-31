@@ -1,10 +1,11 @@
 export class Particle {
-    constructor(x, v, a, mass, radius) {
-        this.x = x ? x : [0, 0];
-        this.v = v ? v : [0, 0];
-        this.a = a ? a : [0, 0];
-        this.mass = mass ? mass : 10;
-        this.radius = radius ? radius : 10;
+    constructor(params) {
+        this.x = params.x ? params.x : [0, 0];
+        this.v = params.v ? params.v : [0, 0];
+        this.a = params.a ? params.a : [0, 0];
+        this.mass = params.mass ? params.mass : 10;
+        this.radius = params.radius ? params.radius : 10;
+        this.color = params.color ? params.color : '#ffffff'
     }
     update() {
         this.x[0] += this.v[0];
@@ -16,7 +17,7 @@ export class Particle {
 
 export class ParticleSystem {
     constructor(particles) {
-        this.particles = particles;
+        this.particles = particles ? particles : [];
     }
     update() {
         for (let p1 of this.particles) {
@@ -45,12 +46,12 @@ export class ParticleSystem {
             const fScalar = G * [(p1.mass * p2.mass) / (r ** 2)]
             const fVector = [fScalar * u[0], fScalar * u[1]];
 
-            p1.a[0] += fVector[0];
-            p1.a[1] += fVector[1];
+            p1.a[0] += fVector[0] / p1.mass;
+            p1.a[1] += fVector[1] / p1.mass;
         }
 
     }
-    addParticle(x, v, a, mass, radius) {
-        this.particles.push(new Particle(x, v, a, mass, radius));
+    addParticle(params) {
+        this.particles.push(new Particle(params));
     }
 }

@@ -1,12 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Particle } from './Particle.js';
+import { Particle, ParticleSystem } from './Particle.js';
 
 function Canvas(props) {
     const canvasRef = useRef(null);
 
     function draw(ctx, params) {
-        console.log(params);
-
         const w = ctx.canvas.width;
         const h = ctx.canvas.height;
 
@@ -16,10 +14,11 @@ function Canvas(props) {
         ctx.fillRect(0, 0, w, h);
 
         for (let i = 0; i < params.particles.length; i++) {
+            const p = params.particles[i];
             ctx.save();
             ctx.fillStyle = '#000000';
             ctx.beginPath();
-            ctx.arc(params.particles[i].x, params.particles[i].y, 20 * Math.sin(params.frameCount * 0.05) ** 2, 0, 2 * Math.PI);
+            ctx.arc(p.x[0], p.x[1], p.radius, 0, 2 * Math.PI);
             ctx.fill();
             ctx.restore();
         }
@@ -28,18 +27,22 @@ function Canvas(props) {
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
-        let particles = makeSomeParticles(
-            10, 800, 400, 0, 0
-        );
+        const w = canvas.width;
+        const h = canvas.height;
+        let pSys = new ParticleSystem([
+            new Particle([w / 2, h / 2]),
+            new Particle([100, 100], [1, 1]),
+            new Particle([0, 0], [2, 0], [0, 0.1]),
+        ]);
 
         const params = {
             frameCount: 0,
-            particles: particles,
+            particles: pSys.particles,
         }
 
-        //Our draw came here
         function render() {
             params.frameCount++;
+            pSys.update();
             draw(context, params);
             window.requestAnimationFrame(render);
         }

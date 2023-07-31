@@ -4,8 +4,7 @@ import Canvas from './Canvas'
 function App() {
   return (
     <div>
-      <h1>Hello world!</h1>
-      <Canvas width="800" height="400" />
+      <Canvas width="800" height="500" />
     </div>
   );
 }

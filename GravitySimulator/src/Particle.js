@@ -43,7 +43,7 @@ export class ParticleSystem {
         if (r >= 10) {
             const G = 1;
             const u = [(p2.x[0] - p1.x[0]) / r, (p2.x[1] - p1.x[1]) / r];
-            const fScalar = G * [(p1.mass * p2.mass) / (r ** 2)]
+            const fScalar = G * ((p1.mass * p2.mass) / (r ** 2))
             const fVector = [fScalar * u[0], fScalar * u[1]];
 
             // F = ma

@@ -51,21 +51,23 @@ function Canvas(props) {
 
 function addSomeParticles(particleSystem) {
     particleSystem.addParticle({
-        x: [400, 100],
-        v: [2, 0],
-        mass: 200,
+        x: [400, 150],
+        v: [2.5, 0],
+        mass: 1,
         radius: 10,
         color: "#0000ff"
     });
     particleSystem.addParticle({
-        x: [400, 150],
-        v: [5, 0],
+        x: [400, 250],
+        v: [4, 0],
+        mass: 1,
         color: "#e0cfa8"
     });
     particleSystem.addParticle({
-        x: [400, 250],
+        x: [400, 300],
+        v: [0, 0],
         mass: 1000,
-        radius: 20,
+        radius: 30,
         color: '#ffff00'
     });
 }

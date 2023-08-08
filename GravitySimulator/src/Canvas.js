@@ -24,9 +24,12 @@ function Canvas(props) {
         }
     }
 
+
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
+        canvas.addEventListener('click', clickHandler);
+        const rect = canvas.getBoundingClientRect();
         let pSys = new ParticleSystem();
         addSomeParticles(pSys);
 
@@ -36,14 +39,28 @@ function Canvas(props) {
             particles: pSys.particles,
         }
 
+        function clickHandler(event) {
+            const x = event.x - rect.left;
+            const y = event.y - rect.top;
+            pSys.addParticle({
+                x: [x, y],
+                v: [2, 0],
+                mass: 0.01,
+                radius: 5,
+                color: "#ffffff"
+            });
+        }
+
         function render(ts) {
-            console.log(ts);
             params.frameCount++;
             pSys.update();
             draw(context, params);
             window.requestAnimationFrame(render);
         }
-        render()
+        render();
+        return () => {
+            canvas.removeEventListener('click', clickHandler);
+        }
     }, []);
 
     return <canvas ref={canvasRef} {...props} />
@@ -72,4 +89,4 @@ function addSomeParticles(particleSystem) {
     });
 }
 
-export default Canvas
+export default Canvas;

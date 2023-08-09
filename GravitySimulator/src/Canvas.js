@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import { ParticleSystem } from './Particle.js';
 
-function Canvas(props) {
+function Canvas({ newMass, width, height }) {
     const canvasRef = useRef(null);
+    const pSys = new ParticleSystem();
+    addSomeParticles(pSys);
 
     function draw(ctx, params) {
         const w = ctx.canvas.width;
@@ -24,14 +26,11 @@ function Canvas(props) {
         }
     }
 
-
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
         canvas.addEventListener('click', clickHandler);
         const rect = canvas.getBoundingClientRect();
-        let pSys = new ParticleSystem();
-        addSomeParticles(pSys);
 
         const params = {
             frameCount: 0,
@@ -45,10 +44,11 @@ function Canvas(props) {
             pSys.addParticle({
                 x: [x, y],
                 v: [2, 0],
-                mass: 0.01,
+                mass: newMass,
                 radius: 5,
                 color: "#ffffff"
             });
+            console.log(newMass);
         }
 
         function render(ts) {
@@ -61,9 +61,9 @@ function Canvas(props) {
         return () => {
             canvas.removeEventListener('click', clickHandler);
         }
-    }, []);
+    }, [newMass]);
 
-    return <canvas ref={canvasRef} {...props} />
+    return <canvas ref={canvasRef} width={width} height={height} />
 }
 
 function addSomeParticles(particleSystem) {

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import { ParticleSystem } from './Particle.js';
 
-function Canvas({ newMass, width, height }) {
+function Canvas({ newMass, newVel, width, height }) {
     const canvasRef = useRef(null);
     const pSys = useMemo(() => {
         const particleSystem = new ParticleSystem();
@@ -34,6 +34,8 @@ function Canvas({ newMass, width, height }) {
         const context = canvas.getContext('2d');
         canvas.addEventListener('click', clickHandler);
         const rect = canvas.getBoundingClientRect();
+        let frameId;
+        let lastTs = 0;
 
         const params = {
             frameCount: 0,
@@ -46,28 +48,28 @@ function Canvas({ newMass, width, height }) {
             const y = event.y - rect.top;
             pSys.addParticle({
                 x: [x, y],
-                v: [2, 0],
+                v: [parseFloat(newVel), 0],
                 mass: newMass,
-                radius: 5,
-                color: "#ffffff"
+                radius: 5 + newMass / 20,
             });
         }
 
         function render(ts) {
             params.frameCount++;
-            if (params.frameCount % 100 === 0) {
-                console.log(`${params.frameCount}`);
+            if (ts - lastTs >= 10) {
+                pSys.update();
+                draw(context, params);
+                lastTs = ts;
             }
-            pSys.update();
-            draw(context, params);
-            window.requestAnimationFrame(render);
+            frameId = window.requestAnimationFrame(render);
         }
 
         render();
         return () => {
             canvas.removeEventListener('click', clickHandler);
+            window.cancelAnimationFrame(frameId);
         }
-    }, [newMass, pSys]);
+    }, [newMass, newVel, pSys]);
 
     return <canvas ref={canvasRef} width={width} height={height} />
 }

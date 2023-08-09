@@ -1,12 +1,13 @@
 import React from 'react';
 
-function SliderComponent({ sliderValue, setSliderValue, min, max }) {
+function SliderComponent({ sliderValue, setSliderValue, min, max, label }) {
     function sliderChangeHandler(event) {
         setSliderValue(event.target.value);
     };
 
     return (
         <div>
+            <span>{label}: </span>
             <input
                 type="range"
                 min={min}
@@ -14,7 +15,7 @@ function SliderComponent({ sliderValue, setSliderValue, min, max }) {
                 value={sliderValue}
                 onChange={sliderChangeHandler}
             />
-            <p>{sliderValue}</p>
+            <span>{sliderValue}</span>
         </div>
     );
 }

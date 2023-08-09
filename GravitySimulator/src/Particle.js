@@ -5,7 +5,22 @@ export class Particle {
         this.a = params.a ? params.a : [0, 0];
         this.mass = params.mass ? params.mass : 1;
         this.radius = params.radius ? params.radius : 5;
-        this.color = params.color ? params.color : '#ffffff'
+
+        // thank you ChatGPT for the nicely-formatted color array
+        const colorArray = [
+            "#FF5733", // Red
+            "#A93226", // Dark Red
+            "#D35400", // Orange
+            "#F39C12", // Yellow
+            "#27AE60", // Green
+            "#2ECC71", // Light Green
+            "#3498DB", // Blue
+            "#2980B9", // Dark Blue
+            "#8E44AD", // Purple
+            "#6C3483"  // Lavender
+        ];
+
+        this.color = params.color ? params.color : colorArray[Math.floor(Math.random() * colorArray.length)];
     }
     update() {
         this.x[0] += this.v[0];
@@ -40,7 +55,7 @@ export class ParticleSystem {
         // u = (r2 - r1)/|r2 - r1|
 
         const r = Math.sqrt((p2.x[0] - p1.x[0]) ** 2 + (p2.x[1] - p1.x[1]) ** 2);
-        if (r >= 10) {
+        if (r >= (p1.radius + p2.radius) / 2) {
             const G = 1;
             const u = [(p2.x[0] - p1.x[0]) / r, (p2.x[1] - p1.x[1]) / r];
             const fScalar = G * ((p1.mass * p2.mass) / (r ** 2))

@@ -1,10 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { ParticleSystem } from './Particle.js';
 
 function Canvas({ newMass, width, height }) {
     const canvasRef = useRef(null);
-    const pSys = new ParticleSystem();
-    addSomeParticles(pSys);
+    const pSys = useMemo(() => {
+        const particleSystem = new ParticleSystem();
+        addSomeParticles(particleSystem);
+        return particleSystem;
+    }, []);
 
     function draw(ctx, params) {
         const w = ctx.canvas.width;
@@ -48,20 +51,23 @@ function Canvas({ newMass, width, height }) {
                 radius: 5,
                 color: "#ffffff"
             });
-            console.log(newMass);
         }
 
         function render(ts) {
             params.frameCount++;
+            if (params.frameCount % 100 === 0) {
+                console.log(`${params.frameCount}`);
+            }
             pSys.update();
             draw(context, params);
             window.requestAnimationFrame(render);
         }
+
         render();
         return () => {
             canvas.removeEventListener('click', clickHandler);
         }
-    }, [newMass]);
+    }, [newMass, pSys]);
 
     return <canvas ref={canvasRef} width={width} height={height} />
 }
@@ -70,14 +76,14 @@ function addSomeParticles(particleSystem) {
     particleSystem.addParticle({
         x: [400, 150],
         v: [2.5, 0],
-        mass: 1,
+        mass: 0.001,
         radius: 10,
         color: "#0000ff"
     });
     particleSystem.addParticle({
         x: [400, 250],
         v: [4, 0],
-        mass: 1,
+        mass: 0.001,
         color: "#e0cfa8"
     });
     particleSystem.addParticle({

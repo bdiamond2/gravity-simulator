@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Canvas from './Canvas'
-import Slider from './Slider.js'
+import Slider from './Slider'
 
 function App() {
   const [sliderMass, setSliderMass] = useState(1);

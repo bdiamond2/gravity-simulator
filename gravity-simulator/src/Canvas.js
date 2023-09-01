@@ -1,8 +1,11 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import { ParticleSystem } from './Particle.js';
 
-function Canvas({ newMass, newVel, width, height }) {
+function Canvas({ sliderVals, width, height }) {
     const canvasRef = useRef(null);
+    const mass = sliderVals.mass;
+    const velocity = sliderVals.velocity;
+    const scale = sliderVals.scale;
     const pSys = useMemo(() => {
         const particleSystem = new ParticleSystem();
         addSomeParticles(particleSystem);
@@ -23,7 +26,7 @@ function Canvas({ newMass, newVel, width, height }) {
             ctx.save();
             ctx.fillStyle = p.color;
             ctx.beginPath();
-            ctx.arc(p.x[0], p.x[1], p.radius, 0, 2 * Math.PI);
+            ctx.arc(p.x[0] * scale, p.x[1] * scale, p.radius * scale, 0, 2 * Math.PI);
             ctx.fill();
             ctx.restore();
         }
@@ -48,9 +51,9 @@ function Canvas({ newMass, newVel, width, height }) {
             const y = event.y - rect.top;
             pSys.addParticle({
                 x: [x, y],
-                v: [parseFloat(newVel), 0],
-                mass: newMass,
-                radius: 5 + newMass / 20,
+                v: [parseFloat(velocity), 0],
+                mass: mass,
+                radius: 5 + mass / 20,
             });
         }
 
@@ -69,7 +72,7 @@ function Canvas({ newMass, newVel, width, height }) {
             canvas.removeEventListener('click', clickHandler);
             window.cancelAnimationFrame(frameId);
         }
-    }, [newMass, newVel, pSys]);
+    }, [mass, velocity, pSys]);
 
     return <canvas ref={canvasRef} width={width} height={height} />
 }

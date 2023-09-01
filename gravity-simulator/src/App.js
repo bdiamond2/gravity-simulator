@@ -5,12 +5,18 @@ import Slider from './Slider'
 function App() {
   const [sliderMass, setSliderMass] = useState(1);
   const [sliderVel, setSliderVel] = useState(2);
+  const [sliderScale, setSliderScale] = useState(1);
 
   return (
     <div>
       <Canvas
         newMass={sliderMass}
         newVel={sliderVel}
+        sliderVals={{
+          mass: sliderMass,
+          velocity: sliderVel,
+          scale: sliderScale
+        }}
         width="800"
         height="600"
       />
@@ -18,15 +24,22 @@ function App() {
         label='Mass'
         sliderValue={sliderMass}
         setSliderValue={setSliderMass}
-        min={1} // Provide your minimum value here
-        max={1000} // Provide your maximum value here
+        min={1}
+        max={1000}
       />
       <Slider
         label='Horizontal Velocity'
         sliderValue={sliderVel}
         setSliderValue={setSliderVel}
-        min={-10} // Provide your minimum value here
-        max={10} // Provide your maximum value here
+        min={-10}
+        max={10}
+      />
+      <Slider
+        label='Scale'
+        sliderValue={sliderScale}
+        setSliderValue={setSliderScale}
+        min={0}
+        max={5}
       />
     </div>
   );

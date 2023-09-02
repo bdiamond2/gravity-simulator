@@ -3,6 +3,7 @@ import { ParticleSystem } from './Particle.js';
 
 function Canvas({ sliderVals, width, height }) {
     const canvasRef = useRef(null);
+    console.log(sliderVals);
     const mass = sliderVals.mass;
     const velocity = sliderVals.velocity;
     const scale = sliderVals.scale;
@@ -72,7 +73,7 @@ function Canvas({ sliderVals, width, height }) {
             canvas.removeEventListener('click', clickHandler);
             window.cancelAnimationFrame(frameId);
         }
-    }, [mass, velocity, pSys]);
+    }, [mass, velocity, scale, pSys]);
 
     return <canvas ref={canvasRef} width={width} height={height} />
 }

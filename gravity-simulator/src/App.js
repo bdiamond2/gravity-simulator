@@ -10,8 +10,6 @@ function App() {
   return (
     <div>
       <Canvas
-        newMass={sliderMass}
-        newVel={sliderVel}
         sliderVals={{
           mass: sliderMass,
           velocity: sliderVel,
@@ -38,8 +36,9 @@ function App() {
         label='Scale'
         sliderValue={sliderScale}
         setSliderValue={setSliderScale}
-        min={0}
-        max={5}
+        min='0'
+        max='5'
+        step='0.1'
       />
     </div>
   );

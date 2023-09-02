@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SliderComponent({ sliderValue, setSliderValue, min, max, label }) {
+function SliderComponent({ sliderValue, setSliderValue, min, max, label, step }) {
     function sliderChangeHandler(event) {
         setSliderValue(event.target.value);
     };
@@ -12,6 +12,7 @@ function SliderComponent({ sliderValue, setSliderValue, min, max, label }) {
                 type="range"
                 min={min}
                 max={max}
+                step={step}
                 value={sliderValue}
                 onChange={sliderChangeHandler}
             />

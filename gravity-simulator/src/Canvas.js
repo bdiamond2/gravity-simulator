@@ -25,9 +25,11 @@ function Canvas({ sliderVals, width, height }) {
         for (let i = 0; i < params.particles.length; i++) {
             const p = params.particles[i];
             ctx.save();
+            ctx.translate(w / 2, h / 2);
+            ctx.scale(scale, -scale);
             ctx.fillStyle = p.color;
             ctx.beginPath();
-            ctx.arc(p.x[0] * scale, p.x[1] * scale, p.radius * scale, 0, 2 * Math.PI);
+            ctx.arc(p.x[0], p.x[1], p.radius, 0, 2 * Math.PI);
             ctx.fill();
             ctx.restore();
         }
@@ -48,8 +50,12 @@ function Canvas({ sliderVals, width, height }) {
         }
 
         function clickHandler(event) {
-            const x = event.x - rect.left;
-            const y = event.y - rect.top;
+            let x = event.x - rect.left;
+            let y = event.y - rect.top;
+            x -= canvas.getContext('2d').canvas.width / 2;
+            y = (y * -1) + canvas.getContext('2d').canvas.height / 2;
+            x /= scale;
+            y /= scale;
             pSys.addParticle({
                 x: [x, y],
                 v: [parseFloat(velocity), 0],
@@ -80,20 +86,20 @@ function Canvas({ sliderVals, width, height }) {
 
 function addSomeParticles(particleSystem) {
     particleSystem.addParticle({
-        x: [400, 150],
+        x: [0, 150],
         v: [2.5, 0],
         mass: 0.001,
         radius: 10,
         color: "#0000ff"
     });
     particleSystem.addParticle({
-        x: [400, 250],
+        x: [0, 50],
         v: [4, 0],
         mass: 0.001,
         color: "#e0cfa8"
     });
     particleSystem.addParticle({
-        x: [400, 300],
+        x: [0, 0],
         v: [0, 0],
         mass: 1000,
         radius: 30,

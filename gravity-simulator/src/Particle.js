@@ -8,16 +8,18 @@ export class Particle {
 
         // thank you ChatGPT for the nicely-formatted color array
         const colorArray = [
-            "#FF5733", // Red
-            "#A93226", // Dark Red
-            "#D35400", // Orange
-            "#F39C12", // Yellow
-            "#27AE60", // Green
-            "#2ECC71", // Light Green
-            "#3498DB", // Blue
-            "#2980B9", // Dark Blue
-            "#8E44AD", // Purple
-            "#6C3483"  // Lavender
+            "#ffdd00",
+            "#ff5733",
+            "#a9a9a9",
+            "#1e90ff",
+            "#ff9900",
+            "#d2b48c",
+            "#ffcc99",
+            "#00ffff",
+            "#66ccff",
+            "#808080",
+            "#ff6666",
+            "#99ff99"
         ];
 
         this.color = params.color ? params.color : colorArray[Math.floor(Math.random() * colorArray.length)];

@@ -7,7 +7,7 @@ function SliderComponent({ sliderValue, setSliderValue, min, max, label, step })
 
     return (
         <div>
-            <span>{label}: </span>
+            <span>{label}</span>
             <input
                 type="range"
                 min={min}

@@ -18,28 +18,42 @@ function App() {
         width="800"
         height="600"
       />
-      <Slider
-        label='Mass'
-        sliderValue={sliderMass}
-        setSliderValue={setSliderMass}
-        min={1}
-        max={1000}
-      />
-      <Slider
-        label='Horizontal Velocity'
-        sliderValue={sliderVel}
-        setSliderValue={setSliderVel}
-        min={-10}
-        max={10}
-      />
-      <Slider
-        label='Scale'
-        sliderValue={sliderScale}
-        setSliderValue={setSliderScale}
-        min='0'
-        max='5'
-        step='0.1'
-      />
+      <table>
+        <tr>
+          <td>Mass</td>
+          <td>
+            <Slider
+              sliderValue={sliderMass}
+              setSliderValue={setSliderMass}
+              min={1}
+              max={1000}
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>X-Velocity</td>
+          <td>
+            <Slider
+              sliderValue={sliderVel}
+              setSliderValue={setSliderVel}
+              min={-10}
+              max={10}
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Scale</td>
+          <td>
+            <Slider
+              sliderValue={sliderScale}
+              setSliderValue={setSliderScale}
+              min='0.1'
+              max='1'
+              step='0.01'
+            />
+          </td>
+        </tr>
+      </table>
     </div>
   );
 }
